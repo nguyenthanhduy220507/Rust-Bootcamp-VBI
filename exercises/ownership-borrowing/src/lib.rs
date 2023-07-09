@@ -3,8 +3,8 @@
 fn exercise1() {
     // Use as many approaches as you can to make it work
     let x = String::from("hello, world");
-    let y = x;
-    let z = x;
+    let y = &x;
+    let z = &x;
 }
 
 // Exercise 2
@@ -18,7 +18,6 @@ fn exercise2() {
 }
 // Only modify the code below!
 fn take_ownership(s: String) -> String {
-    //println!("{}", s);
     s
 }
 
@@ -42,19 +41,19 @@ fn exercise3() {
         let mut addition: f64 = 0.0;
 
         // Sumar valores en additions
-        for element_index in additions {
+        for &element_index in &additions {
             let addition_aux = values[element_index];
             addition = addition_aux + addition;
         }
+        
     }
 }
 
 // Exercise 4
 // Make it compile
-fn exercise4(value: u32) -> &'static str {
-    let str_value = value.to_string(); // Convert u32 to String
-    let str_ref: &str = &str_value; // Obtain a reference to the String
-    str_ref // Return the reference to the String
+fn exercise4(value: u32) -> String {
+    let str_value = value.to_string();
+    str_value
 }
 
 // Exercise 5
@@ -70,7 +69,7 @@ fn exercise5() {
         None => {
             let value = "3.0".to_string();
             my_map.insert(key, value);
-            &value // HERE IT FAILS
+            &my_map[&key] // HERE IT FAILS
         }
     };
 
@@ -83,14 +82,14 @@ fn exercise5() {
 use std::io;
 
 fn exercise6() {
-    let mut prev_key: &str = "";
+    let mut prev_key: String = String::from("");
 
     for line in io::stdin().lines() {
         let s = line.unwrap();
 
         let data: Vec<&str> = s.split("\t").collect();
         if prev_key.len() == 0 {
-            prev_key = data[0];
+            prev_key = data[0].to_string();
         }
     }
 }
@@ -99,18 +98,18 @@ fn exercise6() {
 // Make it compile
 fn exercise7() {
     let mut v: Vec<&str> = Vec::new();
-    {
-        let chars = [b'x', b'y', b'z'];
-        let s: &str = std::str::from_utf8(&chars).unwrap();
-        v.push(&s);
-    }
+    //delete lifetim scoped
+    let chars = [b'x', b'y', b'z'];
+    let s: &str = std::str::from_utf8(&chars).unwrap();
+    v.push(&s);
+    
     println!("{:?}", v);
 }
 
 // Exercise 8
 // Make it compile
 fn exercise8() {
-    let mut accounting = vec!["Alice", "Ben"];
+    let mut accounting = vec!["Alice".to_string(), "Ben".to_string()];
     
     loop {
         let mut add_input = String::from("");
@@ -127,6 +126,6 @@ fn exercise8() {
         }
 
         let person = add_vec[0];
-        accounting.push(person);
+        accounting.push(person.to_string());
     }
 }
