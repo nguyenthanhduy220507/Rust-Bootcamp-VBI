@@ -104,7 +104,7 @@ fn exercise7() {
     v.push(&s);
     
     println!("{:?}", v);
-}2
+}
 
 // Exercise 8
 // Make it compile
