@@ -10,7 +10,7 @@ struct Person {
     hobby: String
 }
 fn exercise1() -> Person {
-    let age = 30;
+    let age: u8 = 30;
     // Hobby = Rust 
     let p = Person {
         name: String::from("sunface"),
